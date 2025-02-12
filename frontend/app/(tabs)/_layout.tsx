@@ -30,12 +30,12 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <HomeIcon color={color}/>,
+          tabBarIcon: ({ color }) => <HomeIcon color={color} />,
           headerShown: true,
           header: () => (
             <SafeAreaView>
               <View className="bg-white flex-row justify-between items-center px-4 pt-6">
-                <Text/>
+                <Text />
                 <Text className="text-xl font-bold text-blue-600">Mega Mall</Text>
                 <View className="flex-row gap-4">
                   <Text>Ic</Text>
@@ -50,7 +50,7 @@ export default function TabLayout() {
         name="wishlist"
         options={{
           title: 'Wishlist',
-          tabBarIcon: ({ color }) => <WishlistIcon color={color}/>,
+          tabBarIcon: ({ color }) => <WishlistIcon color={color} />,
         }}
       />
       <Tabs.Screen
@@ -65,6 +65,13 @@ export default function TabLayout() {
         options={{
           title: 'login',
           tabBarIcon: ({ color }) => <LoginIcon color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="cart_list"
+        options={{
+          title: 'Cart List',
+          tabBarIcon: ({ color }) => <WishlistIcon color={color} />,
         }}
       />
       <Tabs.Screen
