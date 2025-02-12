@@ -21,16 +21,16 @@ const CartItem = ({
   decreaseAmount: () => void
 }) => {
   return (
-    <View className="flex-row p-4 border-b border-gray-300 justify-between">
+    <View className="flex-row shadow-sm p-8 justify-between ">
       <View className="flex-row items-center ">
         <Image source={{ uri: imageUrl }} resizeMode='cover' className="w-28 h-28 mr-4" />
         <View className="flex-col">
           <Text className="text-lg font-semibold line-clamp-1 max-w-[150px] "  >{name}</Text>
-          <Text className="text-sm text-gray-500 line-clamp-2 max-w-[200px]">{description}</Text>
+          <Text className="text-sm text-gray-500 line-clamp-2 max-w-[150px]">{description}</Text>
           <Text className="text-md text-red-600 mt-[20px]">${" " + price}</Text>
         </View>
       </View>
-      <View className='justify-between items-end'>
+      <View className=' justify-between items-end'>
         <Pressable onPress={selectItem} className="flex-row space-x-2">
           <View className={`w-6 h-6 border-2 rounded ${checked ? 'bg-blue-600' : 'bg-white'} border-blue-600`}>
             {checked && <Ionicons name="checkmark" size={20} color="white" />}

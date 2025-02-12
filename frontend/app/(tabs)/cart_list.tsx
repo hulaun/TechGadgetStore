@@ -106,7 +106,7 @@ const CartList = () => {
           <Text className="text-white text-center">Delete</Text>
         </Pressable>
       </View>
-      <View>
+      <View className='flex-1'>
         <FlatList
           data={cartItems}
           renderItem={({ item }) => (
@@ -123,7 +123,6 @@ const CartList = () => {
             />
           )}
           keyExtractor={(item) => item.id.toString()}
-          contentContainerStyle={{ paddingBottom: 50 }}
         />
       </View>
     </View>
