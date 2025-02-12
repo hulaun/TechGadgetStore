@@ -37,14 +37,14 @@ const CartItem = ({
           </View>
         </Pressable>
         <View className="flex-row items-center space-x-14">
-          <Pressable onPress={decreaseAmount} className="bg-gray-300 p-2 rounded-full">
-            <Ionicons name="remove" size={6} color="black" />
+          <Pressable onPress={decreaseAmount} className="bg-red-600 p-1 rounded-full">
+            <Ionicons name="remove" size={10} color="blue" />
           </Pressable>
-          <View >
+          <View className='mx-[4px]' >
             <Text>{amount}</Text>
           </View>
-          <Pressable onPress={increaseAmount} className="bg-gray-300 p-2 rounded-full">
-            <Ionicons name="add" size={6} color="black" />
+          <Pressable onPress={increaseAmount} className="bg-blue-700 p-1 rounded-full">
+            <Ionicons name="add" size={10} color="white" />
           </Pressable>
         </View>
       </View>
