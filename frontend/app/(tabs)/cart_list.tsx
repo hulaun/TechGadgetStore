@@ -49,6 +49,7 @@ export const cartSampleDate = [
 const CartList = () => {
   const [cartItems, setCartItems] = useState<CartItemType[]>(cartSampleDate);
   const [selectedItemIds, setSelectedItemIds] = useState<number[]>([]);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   useEffect(() => {
     const fetchGetCartItems = async (): Promise<void> => {
@@ -96,6 +97,11 @@ const CartList = () => {
     setCartItems(newCartItems);
   };
 
+  useEffect(() => {
+    const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.amount, 0);
+    setTotalPrice(totalPrice);
+  }, [cartItems]);
+
   return (
     <View className="flex-1">
       <View className="flex-row justify-between p-4 mt-[20px]">
@@ -124,6 +130,21 @@ const CartList = () => {
           )}
           keyExtractor={(item) => item.id.toString()}
         />
+      </View>
+      <View>
+        <View className='flex-row justify-between text-center p-2 mx-3 rounded-lg bg-slate-200'>
+          <View>
+            <Text >Total:</Text>
+          </View>
+          <View>
+            <Text className='text-red-600'>{totalPrice + " "}$</Text>
+          </View>
+        </View>
+        <Pressable
+          onPress={() => handleDeleteItems(selectedItemIds)}
+          className="bg-blue-700 text-center p-2 mx-3 rounded-lg m-3">
+          <Text className="text-white text-center">Checkout</Text>
+        </Pressable>
       </View>
     </View>
   );
