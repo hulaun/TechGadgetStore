@@ -7,6 +7,7 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { HomeIcon, LoginIcon, OrderIcon, WishlistIcon } from '@/constants/Icons';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -29,7 +30,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color }) => <HomeIcon color={color}/>,
           headerShown: true,
           header: () => (
             <SafeAreaView>
@@ -49,21 +50,21 @@ export default function TabLayout() {
         name="wishlist"
         options={{
           title: 'Wishlist',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ color }) => <WishlistIcon color={color}/>,
         }}
       />
       <Tabs.Screen
         name="order"
         options={{
           title: 'order',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ color }) => <OrderIcon color={color} />,
         }}
       />
       <Tabs.Screen
         name="login"
         options={{
           title: 'login',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ color }) => <LoginIcon color={color} />,
         }}
       />
       <Tabs.Screen
