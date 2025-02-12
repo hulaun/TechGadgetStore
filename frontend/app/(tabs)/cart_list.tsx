@@ -48,21 +48,10 @@ export const cartSampleDate = [
 
 const CartList = () => {
   const [cartItems, setCartItems] = useState<CartItemType[]>(cartSampleDate);
-  const [selectedItemIds, setSelectedItemIds] = useState<number[]>([]);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
 
-  useEffect(() => {
-    const fetchGetCartItems = async (): Promise<void> => {
-      try {
-        const dataCartItems = await cartSampleDate;
-        setCartItems(dataCartItems);
-      } catch (error) {
-        console.error(error);
-        Alert.alert('Error', 'Error while getting cart items');
-      }
-    };
-    fetchGetCartItems();
-  }, []);
+  const [selectedItemIds, setSelectedItemIds] = useState<number[]>([]);
+
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   const handleDeleteItems = (id: number[]): void => {
     const newCartItems = cartItems.filter((item) => !id.includes(item.id));
@@ -96,6 +85,19 @@ const CartList = () => {
     });
     setCartItems(newCartItems);
   };
+
+  const handleCheckout = (): void => {
+    try {
+
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Error while checking out');
+    }
+  }
+
+  useEffect(() => {
+    setCartItems(cartSampleDate);
+  }, []);
 
   useEffect(() => {
     const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.amount, 0);
@@ -141,7 +143,7 @@ const CartList = () => {
           </View>
         </View>
         <Pressable
-          onPress={() => handleDeleteItems(selectedItemIds)}
+          onPress={handleCheckout}
           className="bg-blue-700 text-center p-2 mx-3 rounded-lg m-3">
           <Text className="text-white text-center">Checkout</Text>
         </Pressable>
