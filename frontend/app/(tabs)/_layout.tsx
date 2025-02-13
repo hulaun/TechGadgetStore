@@ -7,7 +7,7 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { HomeIcon, LoginIcon, OrderIcon, WishlistIcon } from '@/constants/Icons';
+import { BellIcon, CartIcon, HomeIcon, LoginIcon, OrderIcon, WishlistIcon } from '@/constants/Icons';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -38,8 +38,8 @@ export default function TabLayout() {
                 <Text/>
                 <Text className="text-xl font-bold text-blue-600">Mega Mall</Text>
                 <View className="flex-row gap-4">
-                  <Text>Ic</Text>
-                  <Text>Ic</Text>
+                  <BellIcon/>
+                  <CartIcon/>
                 </View>
               </View>
             </SafeAreaView>
