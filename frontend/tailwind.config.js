@@ -16,6 +16,7 @@ module.exports = {
         darkGrey: "#FAFAFA",
         halfGrey: "#838589",
         softGrey: "#EDEDED",
+        offGrey: "#F8F8F8",
         // Label
         offBlue: "#EFF5FB",
         offGreen: "#EEFAF6",
