@@ -15,6 +15,18 @@ export default function TabLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="product_details_screen"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="seller_details_screen"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
     <StatusBar backgroundColor="#161622" style="light" />
   </>

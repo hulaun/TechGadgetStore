@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   View,
   Text,
@@ -6,9 +6,13 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
+  ImageSourcePropType,
+  Dimensions,
 } from "react-native";
 import { Avatar, Divider } from "react-native-paper";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import ProductCard from "@/components/ui/ProductCard";
 
 // Mock Data
 const sellerInfo = {
@@ -21,62 +25,29 @@ const sellerInfo = {
   avatar: require("../../assets/images/shop.png"),
 };
 
-const products = [
-  {
-    id: 1,
-    name: "TMA-2 HD Wireless",
-    price: "Rp. 1.500.000",
-    image: require("../../assets/images/headset.png"),
-    rating: 4.6,
-    reviewCount: 86,
-  },
-  {
-    id: 2,
-    name: "Power Drill",
-    price: "Rp. 1.500.000",
-    image: require("../../assets/images/drill.png"),
-    rating: 4.6,
-    reviewCount: 86,
-  },
-  {
-    id: 3,
-    name: "TMA-2 HD Wireless",
-    price: "Rp. 1.500.000",
-    image: require("../../assets/images/headset.png"),
-    rating: 4.6,
-    reviewCount: 86,
-  },
-  {
-    id: 4,
-    name: "Power Drill",
-    price: "Rp. 1.500.000",
-    image: require("../../assets/images/drill.png"),
-    rating: 4.6,
-    reviewCount: 86,
-  },
-  {
-    id: 5,
-    name: "TMA-2 HD Wireless",
-    price: "Rp. 1.500.000",
-    image: require("../../assets/images/headset.png"),
-    rating: 4.6,
-    reviewCount: 86,
-  },
-  {
-    id: 6,
-    name: "Power Drill",
-    price: "Rp. 1.500.000",
-    image: require("../../assets/images/drill.png"),
-    rating: 4.6,
-    reviewCount: 86,
-  },
+type Product = {
+    id: string;
+    name: string;
+    price: string;
+    image: ImageSourcePropType;
+    rating: number;
+    sold: number;
+  };
+
+const products: Array<Product> = [
+    { id: "1", name: "TMA-2 HD Wireless", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png") , rating: 4.5, sold: 100 },
+    { id: "2", name: "TMA-2 HD Wireless", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png"), rating: 4.5, sold: 100 },
+    { id: "3", name: "Oppo A15", price: "Rp. 500,000", image: require("../../assets/images/headphones.png"), rating: 4.2, sold: 200 },
+// { id: "4", name: "Oppo A15", price: "Rp. 500,000", image: "https://picsum.photos/20", rating: 4.2, sold: 200 },
 ];
 
-const SellerDetailsScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
+const SellerDetailsScreen=()=>{
+  const router = useRouter();
+  const screenWidth = useRef<number>(Dimensions.get("screen").width);
   return (
     <View className="flex-1 bg-white">
       <View className="flex-row justify-between items-center p-4">
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={24} color="black" />
         </TouchableOpacity>
         <Text className="text-lg font-bold">Info Seller</Text>
@@ -159,41 +130,16 @@ const SellerDetailsScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       <Divider className="my-3" />
 
       <FlatList
-        data={products}
-        numColumns={2}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={{ paddingHorizontal: 8 }}
-        columnWrapperStyle={{ justifyContent: "space-between" }}
-        renderItem={({ item }) => (
-          <View className="w-[48%] bg-white rounded-lg p-3 mb-4 shadow-md relative">
-            <View className="w-full h-36">
-              <Image
-                source={item.image}
-                className="w-full h-full rounded-md"
-                resizeMode="contain"
-              />
-            </View>
-
-            <Text className="text-sm font-bold mt-2">{item.name}</Text>
-
-            <Text className="text-red-500 font-bold text-base">
-              {item.price}
-            </Text>
-
-            <View className="flex-row items-center mt-1">
-              <MaterialIcons name="star" size={16} color="gold" />
-              <Text className="text-sm font-semibold ml-1">{item.rating}</Text>
-              <Text className="text-sm text-gray-500 ml-2">
-                {item.reviewCount} Reviews
-              </Text>
-            </View>
-
-            <TouchableOpacity className="absolute bottom-3 right-2">
-              <MaterialIcons name="more-vert" size={18} color="gray" />
-            </TouchableOpacity>
-          </View>
-        )}
-      />
+                showsVerticalScrollIndicator={false}
+                data={products}
+                keyExtractor={(product) => product.id.toString()}
+                numColumns={2}
+                columnWrapperStyle={{ justifyContent: "space-between", gap: 16 , marginBottom: 16}}
+                renderItem={({ item }) => (
+                    <ProductCard item={item} width={(screenWidth.current - 56) / 2} />
+                    )}
+                    contentContainerStyle={{ gap: 16}}
+            />
 
       <View className="absolute bottom-10 left-0 right-0 bg-white p-4 flex-row justify-between">
         <TouchableOpacity className="flex-1 bg-gray-200 py-3 rounded-lg flex-row items-center justify-center mr-2">

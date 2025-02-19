@@ -1,11 +1,14 @@
 import { OptionsIcon, StarIcon } from '@/constants/Icons'
+import { router, useRouter } from 'expo-router'
 import React from 'react'
 import { Image, ImageSourcePropType, Text, TouchableOpacity, View } from 'react-native'
 
 export default function ProductCard({item, width}: {width: number ,item:{ id: string, name: string, price: string, image: ImageSourcePropType, rating: number, sold: number }}) {
+  const router = useRouter();
   return (
     <TouchableOpacity 
       className={`bg-white p-4 rounded-lg shadow-sm`} 
+      onPress={()=>{router.push("/(others)/product_details_screen")}}
       style = {{width: Math.round(width)}}>
         <View className="rounded-lg flex justify-center items-center">
           <Image 
