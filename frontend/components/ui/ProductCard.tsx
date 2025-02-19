@@ -1,11 +1,19 @@
 import { OptionsIcon, StarIcon } from '@/constants/Icons'
 import React from 'react'
-import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { Image, ImageSourcePropType, Text, TouchableOpacity, View } from 'react-native'
 
-export default function ProductCard({item}: { item:{ id: string, name: string, price: string, image: string, rating: number, sold: number }}) {
+export default function ProductCard({item, width}: {width: number ,item:{ id: string, name: string, price: string, image: ImageSourcePropType, rating: number, sold: number }}) {
   return (
-    <TouchableOpacity className="bg-white p-4 rounded-lg shadow-sm">
-        <Image source={{ uri: item.image }} className="w-full aspect-1 mb-2" />
+    <TouchableOpacity 
+      className={`bg-white p-4 rounded-lg shadow-sm`} 
+      style = {{width: Math.round(width)}}>
+        <View className="rounded-lg flex justify-center items-center">
+          <Image 
+            source={typeof item.image === "string" ? { uri: item.image } : item.image} 
+            className=" w-3/4 rounded-lg"
+            resizeMode="contain"
+          />
+        </View>
         <Text className="font-semibold">{item.name}</Text>
         <Text className="text-red-500 font-semibold">{item.price}</Text>
         <View className="flex-row justify-between items-center">
