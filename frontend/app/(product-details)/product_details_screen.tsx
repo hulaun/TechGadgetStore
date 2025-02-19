@@ -2,8 +2,6 @@ import React from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import { Avatar, Button, Divider } from "react-native-paper";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { styled } from "nativewind";
-
 interface Review {
   id: number;
   name: string;
@@ -91,7 +89,7 @@ const ProductDetailScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   return (
     <ScrollView className="flex-1 bg-white px-4 my-3">
       <View className="flex-row justify-between items-center my-3">
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity >
           <Ionicons name="chevron-back" size={24} color="black" />
         </TouchableOpacity>
 
