@@ -3,6 +3,7 @@ import {View, Text, TextInput, TouchableOpacity, Keyboard} from "react-native";
 import Feather from '@expo/vector-icons/Feather';
 import {useTheme} from "@react-navigation/native";
 import {Link, useRouter} from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 
 export default function ResetPassword() {
@@ -18,7 +19,9 @@ export default function ResetPassword() {
 
     return (
         <View className="flex-1 justify-between flex-col" style={{backgroundColor: theme.colors.background}}>
-            <View/>
+            <TouchableOpacity className="p-4" onPress={() => router.back()}>
+                <Ionicons name="chevron-back" size={24} color="black" />
+            </TouchableOpacity>
 
             <View className="justify-center px-8">
                 <Text className="text-3xl font-bold mb-2" style={{color: theme.colors.text}}>Reset Password</Text>

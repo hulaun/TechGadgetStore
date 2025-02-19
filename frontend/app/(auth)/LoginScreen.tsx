@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Keyboard } from "react-native";
 import Feather from '@expo/vector-icons/Feather';
 import { useTheme } from "@react-navigation/native";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function LoginScreen() {
   const theme = useTheme();
@@ -10,6 +11,7 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -34,7 +36,9 @@ export default function LoginScreen() {
   return (
     <View className="flex-1 justify-between flex-col" style={{ backgroundColor: theme.colors.background }}>
 
-      <View />
+      <TouchableOpacity className="p-4" onPress={() => router.push("/(tabs)")}>
+        <Ionicons name="chevron-back" size={24} color="black" />
+      </TouchableOpacity>
 
       <View className="justify-center px-8">
         <Text className="text-3xl font-bold mb-2" style={{ color: theme.colors.text }}>Welcome back to</Text>

@@ -1,15 +1,15 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useRouter } from 'expo-router'
 
 const Login = () => {
-  return (
-    <SafeAreaView className="flex-1 bg-white">
-        <View>
-            <Text>Login</Text>
-        </View>
-    </SafeAreaView>
-  )
+  const router = useRouter()
+  useEffect(() => {
+    router.replace("/(auth)/LoginScreen");
+  },[router])
+
+  return null
 }
 
 export default Login

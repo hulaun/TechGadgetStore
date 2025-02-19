@@ -3,6 +3,7 @@ import {Pressable, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useTheme} from "@react-navigation/native";
 import {OtpInput} from "react-native-otp-entry";
 import {useRouter} from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function VerifyCode() {
     const OTP_LENGTH = 4;
@@ -45,8 +46,9 @@ export default function VerifyCode() {
 
     return (
         <View className="flex-1 justify-between flex-col" style={{backgroundColor: theme.colors.background}}>
-            <View/>
-
+            <TouchableOpacity className="p-4" onPress={() => router.back()}>
+                <Ionicons name="chevron-back" size={24} color="black" />
+            </TouchableOpacity>
             <View className="justify-center px-8">
                 <Text className="text-3xl font-bold mb-2" style={{color: theme.colors.text}}>Verify Code</Text>
                 <Text className="text-gray-500 mb-12">
