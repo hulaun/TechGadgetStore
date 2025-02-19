@@ -1,10 +1,5 @@
-import { Stack, Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import { Stack } from 'expo-router';
 
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { StatusBar } from 'expo-status-bar';
 
@@ -15,17 +10,29 @@ export default function TabLayout() {
     <>
     <Stack>
       <Stack.Screen
-        name="sign_in"
+        name="LoginScreen"
         options={{
           headerShown: false,
         }}
       />
       <Stack.Screen
-        name="sign_up"
+        name="reset-password/ResetPassword"
         options={{
           headerShown: false,
         }}
       />
+      <Stack.Screen
+          name="reset-password/VerifyCode"
+          options={{
+            headerShown: false,
+          }}
+      />
+        <Stack.Screen
+            name="reset-password/UpdatePassword"
+            options={{
+                headerShown: false,
+            }}
+        />
     </Stack>
     <StatusBar backgroundColor="#161622" style="light" />
   </>
