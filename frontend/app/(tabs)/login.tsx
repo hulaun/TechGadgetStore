@@ -1,16 +1,15 @@
-import { View, Text } from 'react-native'
 import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import ProductDetailScreen from "../(product-details)/product_details_screen"
-import SellerDetailsScreen from "../(seller-details)/seller_details_screen";
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context'
+import LoginScreen from "@/app/(auth)/LoginScreen";
 
 const Login = () => {
-  return (
-    <SafeAreaView className="flex-1 bg-white">
-        <ProductDetailScreen></ProductDetailScreen>
-        {/* <SellerDetailsScreen></SellerDetailsScreen> */}
-    </SafeAreaView>
-  )
+    const insets = useSafeAreaInsets();
+
+    return (
+        <SafeAreaView className="flex-1" style={{paddingBottom: insets.bottom}}>
+            <LoginScreen/>
+        </SafeAreaView>
+    )
 }
 
 export default Login
