@@ -4,6 +4,7 @@ import { Avatar, Button, Divider } from "react-native-paper";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import ProductCard from "@/components/ui/ProductCard";
 import { useRouter } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 interface Review {
   id: number;
   name: string;
@@ -105,163 +106,140 @@ const currentProduct: FeaturedProduct = {
 };
 
 const ProductDetailScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
-  const screenWidth = React.useRef(Dimensions.get("window").width);
+  const sections = [
+    { id: "header" },
+    { id: "image" },
+    { id: "info" },
+    { id: "shop" },
+    { id: "description" },
+    { id: "reviews" },
+    { id: "featured" },
+    { id: "buttons" }
+  ];
   const router = useRouter();
-  return (
-    <ScrollView className="flex-1 bg-white px-4 my-3">
-      {/* Header */}
-      <View className="flex-row justify-between items-center my-3">
-        <TouchableOpacity 
-          onPress={() => router.back()}>
-          <Ionicons name="chevron-back" size={24} color="black" />
-        </TouchableOpacity>
+  const screenWidth = Dimensions.get("screen").width;
 
-        <Text className="text-lg font-bold">Detail Product</Text>
-
-        <View className="flex-row items-center">
-          <TouchableOpacity>
-            <MaterialIcons name="ios-share" size={24} color="black" />
+const renderItem = ({ item }: {item: any}) => {
+  switch (item.id) {
+    case "header":
+      return (
+        <View className="flex-row justify-between items-center my-3">
+          <TouchableOpacity onPress={() => router.back()}>
+            <Ionicons name="chevron-back" size={24} color="black" />
           </TouchableOpacity>
-
-          <TouchableOpacity className="ml-2">
-            <MaterialIcons name="shopping-cart" size={24} color="black" />
-            <View className="absolute top-0 right-0 bg-red-500 w-3 h-3 rounded-full" />
-          </TouchableOpacity>
+          <Text className="text-lg font-bold">Detail Product</Text>
+          <View className="flex-row items-center">
+            <TouchableOpacity>
+              <MaterialIcons name="ios-share" size={24} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity className="ml-2">
+              <MaterialIcons name="shopping-cart" size={24} color="black" />
+              <View className="absolute top-0 right-0 bg-red-500 w-3 h-3 rounded-full" />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-
-      {/* Product Image */}
-      <View className="rounded-lg flex justify-center items-center">
-        <Image
-          source={require("../../assets/images/headphones.png")}
-          className="w-full aspect-1"
-          resizeMode="contain"
-        />
-      </View>
-      
-      {/* Product Info */}
-      <View className="mt-4">
-        <View>
+      );
+    case "image":
+      return (
+        <View className="rounded-lg flex justify-center items-center">
+          <Image source={require("../../assets/images/headphones.png")} className="w-full aspect-1" resizeMode="contain" />
+        </View>
+      );
+    case "info":
+      return (
+        <View className="mt-4">
           <Text className="text-xl font-bold">{currentProduct.name}</Text>
-          <Text className="text-lg text-red-500 font-bold">
-            {currentProduct.price}
-          </Text>
-        </View>
-
-        <View className="flex-row justify-between items-center">
-          <View className="flex-row items-center mt-1">
-            <MaterialIcons name="star" size={18} color="gold" />
-            <Text className="text-base font-semibold ml-1">
-              {currentProduct.rating}
-            </Text>
-            <Text className="text-base text-gray-500 ml-2">
-              {currentProduct.reviewCount} Reviews
-            </Text>
-          </View>
-          <View className="bg-green-100 px-3 py-1 rounded-full self-center">
-            <Text className="text-green-600 font-semibold">
-              Tersedia : {currentProduct.tersedia}
-            </Text>
-          </View>
-        </View>
-      </View>
-
-      {/* Shop Info */}
-      <TouchableOpacity 
-        className="flex-row items-center my-4"
-        onPress={() => router.push("/(others)/seller_details_screen")}>
-        <Avatar.Image
-          size={40}
-          source={require("../../assets/images/shop.png")}
-        />
-        <View className="ml-3">
-          <Text className="text-base font-bold">Shop Larson Electronic</Text>
-          <Text className="text-sm text-gray-500">Official Store ✅</Text>
-        </View>
-      </TouchableOpacity>
-
-      <Divider />
-
-      <View className="my-4">
-        <Text className="text-lg font-bold">Description Product</Text>
-        <Text className="text-gray-500 mt-1">{currentProduct.description}</Text>
-      </View>
-
-      <Divider />
-
-      <View className="my-4">
-        <View className="flex-row justify-between items-center mt-1">
-          <Text className="text-lg font-bold">
-            Review ({currentProduct.reviewCount})
-          </Text>
-          <View className="flex-row mr-5">
-            <MaterialIcons name="star" size={18} color="gold" />
-            <Text className="text-base font-semibold ml-1">
-              {currentProduct.rating}
-            </Text>
-          </View>
-        </View>
-        {reviews.map((item) => (
-          <View key={item.id} className="flex-row mt-4">
-            <Avatar.Image size={40} source={item.avatar} />
-            <View className="ml-3 flex-1">
-              <Text className="text-sm font-bold">{item.name}</Text>
-              <Text className="text-xs text-gray-500">{item.time}</Text>
-              <View className="flex-row mt-1">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <MaterialIcons
-                    key={i}
-                    name="star"
-                    size={16}
-                    color={i < item.rating ? "gold" : "lightgray"}
-                  />
-                ))}
-              </View>
-              <Text className="text-gray-500 mt-1">{item.review}</Text>
+          <Text className="text-lg text-red-500 font-bold">{currentProduct.price}</Text>
+          <View className="flex-row justify-between items-center">
+            <View className="flex-row items-center mt-1">
+              <MaterialIcons name="star" size={18} color="gold" />
+              <Text className="text-base font-semibold ml-1">{currentProduct.rating}</Text>
+              <Text className="text-base text-gray-500 ml-2">{currentProduct.reviewCount} Reviews</Text>
+            </View>
+            <View className="bg-green-100 px-3 py-1 rounded-full">
+              <Text className="text-green-600 font-semibold">Tersedia : {currentProduct.tersedia}</Text>
             </View>
           </View>
-        ))}
-      </View>
-
-      <Button
-        mode="outlined"
-        onPress={() => alert("See all reviews")}
-        className="mt-3"
-      >
-        See All Reviews
-      </Button>
-
-      <Divider />
-
-      {/* Featured Products */}
-      <FlatList
+        </View>
+      );
+    case "shop":
+      return (
+        <TouchableOpacity className="flex-row items-center my-4" onPress={() => router.push("/(others)/seller_details_screen")}> 
+          <Avatar.Image size={40} source={require("../../assets/images/shop.png")} />
+          <View className="ml-3">
+            <Text className="text-base font-bold">Shop Larson Electronic</Text>
+            <Text className="text-sm text-gray-500">Official Store ✅</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    case "description":
+      return (
+        <View className="my-4">
+          <Text className="text-lg font-bold">Description Product</Text>
+          <Text className="text-gray-500 mt-1">{currentProduct.description}</Text>
+        </View>
+      );
+    case "reviews":
+      return (
+        <View className="my-4">
+          <Text className="text-lg font-bold">Review ({currentProduct.reviewCount})</Text>
+          {reviews.map((item) => (
+            <View key={item.id} className="flex-row mt-4">
+              <Avatar.Image size={40} source={item.avatar} />
+              <View className="ml-3 flex-1">
+                <Text className="text-sm font-bold">{item.name}</Text>
+                <Text className="text-xs text-gray-500">{item.time}</Text>
+                <View className="flex-row mt-1">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <MaterialIcons key={i} name="star" size={16} color={i < item.rating ? "gold" : "lightgray"} />
+                  ))}
+                </View>
+                <Text className="text-gray-500 mt-1">{item.review}</Text>
+              </View>
+            </View>
+          ))}
+          <Button mode="outlined" onPress={() => alert("See all reviews")} className="mt-3">See All Reviews</Button>
+        </View>
+      );
+    case "featured":
+      return (
+        <FlatList
           showsVerticalScrollIndicator={false}
           data={products}
           keyExtractor={(product) => product.id.toString()}
           numColumns={2}
-          columnWrapperStyle={{ justifyContent: "space-between", gap: 16 , marginBottom: 16}}
-          renderItem={({ item }) => (
-              <ProductCard item={item} width={(screenWidth.current - 56) / 2} />
-              )}
-              contentContainerStyle={{ gap: 16}}
-      />
-      <View className="left-0 right-0 bg-white p-4 flex-row justify-between">
-        <TouchableOpacity className="flex-1 bg-red-500 py-3 rounded-lg flex-row items-center justify-center mr-2">
-          <Text className="text-white font-semibold">Added</Text>
-          <MaterialIcons
-            name="favorite"
-            size={20}
-            color="white"
-            className="ml-2"
-          />
-        </TouchableOpacity>
+          columnWrapperStyle={{ justifyContent: "space-between", gap: 16, marginBottom: 16 }}
+          renderItem={({ item }) => <ProductCard item={item} width={(screenWidth - 56) / 2} />}
+          contentContainerStyle={{ gap: 16 }}
+        />
+      );
+    case "buttons":
+      return (
+        <View className="left-0 right-0 bg-white p-4 flex-row justify-between">
+          <TouchableOpacity className="flex-1 bg-red-500 py-3 rounded-lg flex-row items-center justify-center mr-2">
+            <Text className="text-white font-semibold">Added</Text>
+            <MaterialIcons name="favorite" size={20} color="white" className="ml-2" />
+          </TouchableOpacity>
+          <TouchableOpacity className="flex-1 bg-blue-600 py-3 rounded-lg flex-row items-center justify-center">
+            <Text className="text-white font-semibold">Add to Cart</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    default:
+      return null;
+  }
+};
 
-        <TouchableOpacity className="flex-1 bg-blue-600 py-3 rounded-lg flex-row items-center justify-center">
-          <Text className="text-white font-semibold">Add to Cart</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
-  );
+return (
+  <SafeAreaView className="flex-1 bg-white px-4">
+    <FlatList
+      data={sections}
+      keyExtractor={(item) => item.id}
+      renderItem={renderItem}
+      showsVerticalScrollIndicator={false}
+    />
+  </SafeAreaView>
+);
 };
 
 export default ProductDetailScreen;

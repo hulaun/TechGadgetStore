@@ -15,6 +15,8 @@ export const Colors = {
   halfGrey: "#838589",
   softGrey: "#EDEDED",
   offGrey: "#FAFAFA",
+  softPurple: "#F1EDFC",
+  softOrange: "#FFF6E4",
   //label
   offBlue: "#EFF5FB",
   offGreen: "#EEFAF6",

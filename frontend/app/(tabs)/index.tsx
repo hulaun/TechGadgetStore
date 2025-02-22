@@ -30,35 +30,35 @@ const categories:Array<Category> = [
     id: 1,
     name: "Foods",
     Icon: FoodsIcon,
-    color: "bg-offGreen",
+    color: Colors.offGreen,
     iconColor: Colors.earthGreen
   },
   {
     id: 2,
     name: "Gift",
     Icon: GiftIcon,
-    color: "bg-offRed",
+    color: Colors.offRed,
     iconColor: Colors.redVelvet
   },
   {
     id: 3,
     name: "Fashion",
     Icon: FashionIcon,
-    color: "bg-[#FFF6E4]",
+    color: Colors.softOrange,
     iconColor: Colors.orangeFresh
   },
   {
     id: 4,
     name: "Gadget",
     Icon: GadgetIcon,
-    color: "bg-[#F1EDFC]",
+    color: Colors.softPurple,
     iconColor: "purple"
   },
   {
     id: 5,
     name: "Computers",
     Icon: ComputerIcon,
-    color: "bg-offGreen",
+    color: Colors.offGreen,
     iconColor: Colors.earthGreen
   },
 ]
@@ -127,7 +127,7 @@ const Home = () => {
             case 'banner':
               return (
                 <View className='px-6'>
-                  <View className="bg-blueOcean rounded-xl p-6 mb-4">
+                  <View className="bg-blue-600 rounded-xl p-6 mb-4">
                     <Text className="text-white text-lg font-bold">Gatis Ongkir Selama PPKM!</Text>
                     <Text className="text-white">Periode Mei - Agustus 2021</Text>
                   </View>
@@ -139,7 +139,7 @@ const Home = () => {
                 <View
                   className='px-6 pb-6'
                   >
-                  <Text className="text-lg font-semibold mb-2">Categories</Text>
+                  <Text className="text-lg font-semibold mb-2"style={{ color: theme.colors.text }}>Categories</Text>
                   <FlatList
                     showsHorizontalScrollIndicator={false} 
                     horizontal
@@ -147,10 +147,10 @@ const Home = () => {
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => (
                       <TouchableOpacity className="flex items-center mr-6" onPress={()=>router.push(`/(others)/category?name=${item.name}`)}>
-                        <View className={`${item.color} p-4 rounded-xl w-14 h-14 flex items-center justify-center mb-2`}>
-                          <item.Icon color={item.iconColor} />
+                        <View style={{ backgroundColor: (theme.dark)?"":item.color, borderColor: theme.dark?item.iconColor:"", borderWidth:theme.dark?1:0 }} className={`p-4 rounded-xl w-14 h-14 flex items-center justify-center mb-2`}>
+                          <item.Icon color={(theme.dark)?item.color:item.iconColor} />
                         </View>
-                        <Text className="text-sm text-center">{item.name}</Text>
+                        <Text className="text-sm text-center" style={{ color: theme.colors.text }}>{item.name}</Text>
                       </TouchableOpacity>
                     )}
                   />
@@ -160,8 +160,8 @@ const Home = () => {
             case 'forYou':
               const theProducts = item.data as Array<Product>;
               return (
-                <View className='px-6 bg-offGrey rounded-t-xl'>
-                  <Text className="text-lg font-semibold mb-2">
+                <View className='px-6 rounded-t-xl' style={{ backgroundColor: theme.colors.primary }}>
+                  <Text className="text-lg font-semibold mb-2" style={{ color: theme.colors.text }}>
                     {item.type === 'featured' ? 'Top Rated Products' : 'Products for You'}
                   </Text>
                   <FlatList
