@@ -7,6 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,7 +18,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
     private String email;
     private String password;
     private String phoneNumber;
@@ -35,11 +35,4 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<WishlistItem> wishlistItems;
 
-    public String getUsername(){
-        return username;
-    }
-
-    public String getPassword(){
-        return password;
-    }
 }

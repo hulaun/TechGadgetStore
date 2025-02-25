@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.UserDto;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +24,8 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
+    public User createUser(@RequestBody UserDto user) {
         return userService.createUser(user);
     }
 
-    @GetMapping("/generate-users/{amount}")
-    public List<User> generateUsers(@PathVariable int amount){
-        return userService.getAllUsers();
-    }
 }

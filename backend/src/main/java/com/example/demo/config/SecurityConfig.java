@@ -14,8 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtDecoders;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -31,33 +30,40 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        return http.csrf(customizer -> customizer.disable())
-                .authorizeHttpRequests(request -> request
-                        .requestMatchers("login", "register").permitAll()
-                        .anyRequest().authenticated())
-                .oauth2Login(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults()).
-                sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+        return http
+                .csrf(csrf -> csrf.disable())  // Disable CSRF for APIs
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("login","register","/auth/login", "/auth/register", "/oauth2/**").permitAll() // Public endpoints
+                        .anyRequest().authenticated()
+                )
+//                .oauth2Login(oauth2 -> oauth2
+//                        .defaultSuccessUrl("/", true)  // Redirect to home after successful login
+//                        .failureUrl("/login?error=true") // Handle failed login
+//                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Allow session-based OAuth2 login
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class) // JWT processing
                 .build();
+    }
 
 
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder(12);
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(new BCryptPasswordEncoder(12) );
+        provider.setPasswordEncoder(passwordEncoder);
         provider.setUserDetailsService(userDetailsService);
-
 
         return provider;
     }
 
     @Bean
-    public AuthenticationManager  authenticationManager(AuthenticationConfiguration  config) throws Exception {
+    public AuthenticationManager  authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
-
     }
 }
