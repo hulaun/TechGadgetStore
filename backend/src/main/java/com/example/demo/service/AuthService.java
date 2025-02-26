@@ -114,15 +114,23 @@ public class AuthService {
         return "Verification successful";
     }
 
-    public String changePassword(UserDto userDto) {
-        User user = userRepository.findByEmail(userDto.getUsername())
-                .orElseGet(()->userRepository.findByPhoneNumber(userDto.getUsername()).orElse(null));
+    public String changePassword(UserDto userDto, String token) {
 
-        if (!passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
-            throw new BadCredentialsException("Invalid credentials");
+        String identifier = jwtService.extractIdentifier(token);
+
+        User user = userRepository.findByEmail(identifier)
+                .orElseGet(()->userRepository.findByPhoneNumber(identifier).orElse(null));
+
+
+        if (user == null) {
+            throw new IllegalArgumentException("User not found");
         }
 
-//        user.setPassword(passwordEncoder.encode(userDto.getNewPassword()));
+        if(userDto.getNewPassword()==null || userDto.getNewPassword().isEmpty()){
+            throw new IllegalArgumentException("New password is required");
+        }
+
+        user.setPassword(passwordEncoder.encode(userDto.getNewPassword()));
         userRepository.save(user);
 
         return "Password changed successfully";

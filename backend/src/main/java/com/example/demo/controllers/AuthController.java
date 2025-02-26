@@ -2,26 +2,21 @@ package com.example.demo.controllers;
 
 import com.example.demo.dto.UserDto;
 import com.example.demo.dto.VerificationCodeDto;
-import com.example.demo.models.User;
 import com.example.demo.service.AuthService;
 import com.example.demo.service.JWTService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
     private final AuthService authService;
-    private final JWTService jwtService;
 
     public AuthController(AuthService authService, JWTService jwtService) {
         this.authService = authService;
-        this.jwtService = jwtService;
     }
 
     @PostMapping("/register")
@@ -52,7 +47,10 @@ public class AuthController {
     }
 
     @PostMapping("/change-password")
-    public ResponseEntity<String> changePassword(@RequestBody UserDto userDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(authService.changePassword(userDto));
+    public ResponseEntity<String> changePassword(@RequestBody UserDto userDto, @RequestHeader("Authorization") String token) {
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(authService.changePassword(userDto, token));
     }
 }

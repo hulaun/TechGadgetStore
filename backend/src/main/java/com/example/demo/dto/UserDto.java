@@ -15,6 +15,7 @@ public class UserDto {
     private String password;
     private String phoneNumber;
     private String address;
+    private String newPassword;
 
     public String getUsername() {
         return email==null?phoneNumber:email;
