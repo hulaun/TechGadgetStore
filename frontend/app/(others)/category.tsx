@@ -4,6 +4,8 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { CartIcon, ChevronLeftIcon } from "@/constants/Icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ProductCard from "@/components/ui/ProductCard";
+import { StatusBar } from "expo-status-bar";
+import { useTheme } from "@react-navigation/native";
 
 
 type Product = {
@@ -26,10 +28,12 @@ const CategoryScreen = () => {
   const { name } = useLocalSearchParams();
   const router = useRouter();
   const screenWidth = useRef(Dimensions.get("window").width);
-
+  const theme = useTheme();
   
   return (
     <SafeAreaView className="flex-1 bg-white h-full">
+      <StatusBar backgroundColor={theme.colors.background}/>
+      
       <View className="flex-row items-center justify-between p-4">
         <TouchableOpacity onPress={() => router.back()}>
           <ChevronLeftIcon color="black" />

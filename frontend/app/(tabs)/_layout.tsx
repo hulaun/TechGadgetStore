@@ -8,9 +8,11 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BellIcon, CartIcon, HomeIcon, LoginIcon, OrderIcon, WishlistIcon } from '@/constants/Icons';
+import { useTheme } from '@react-navigation/native';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const theme = useTheme();
 
   return (
     <Tabs
@@ -34,7 +36,7 @@ export default function TabLayout() {
           headerShown: true,
           header: () => (
             <SafeAreaView>
-              <View className="bg-white flex-row justify-between items-center px-4 pt-6">
+              <View style={{backgroundColor: theme.colors.background}}className="flex-row justify-between items-center px-4 pt-6">
                 <Text/>
                 <Text className="text-xl font-bold text-blue-600">Mega Mall</Text>
                 <View className="flex-row gap-4">
