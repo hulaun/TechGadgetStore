@@ -32,7 +32,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <HomeIcon color={color}/>,
+          tabBarIcon: ({ color }) => <HomeIcon color={color} />,
           headerShown: true,
           header: () => (
             <SafeAreaView>
@@ -52,7 +52,7 @@ export default function TabLayout() {
         name="wishlist"
         options={{
           title: 'Wishlist',
-          tabBarIcon: ({ color }) => <WishlistIcon color={color}/>,
+          tabBarIcon: ({ color }) => <WishlistIcon color={color} />,
         }}
       />
       <Tabs.Screen
@@ -67,6 +67,13 @@ export default function TabLayout() {
         options={{
           title: 'login',
           tabBarIcon: ({ color }) => <LoginIcon color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="cart_list"
+        options={{
+          title: 'Cart List',
+          tabBarIcon: ({ color }) => <WishlistIcon color={color} />,
         }}
       />
       <Tabs.Screen
