@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
-import {Alert, Keyboard, Pressable, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Alert, Text, TouchableOpacity, View} from "react-native";
 import {useTheme} from "@react-navigation/native";
 import {OtpInput} from "react-native-otp-entry";
 import {useRouter} from "expo-router";
-import {TouchableWithoutFeedback} from "react-native";
 import {Controller, useForm} from "react-hook-form";
+import KeyboardDismissWrapper from "@/components/ui/KeyboardDismissWrapper";
+import {Ionicons} from "@expo/vector-icons";
 
 export default function VerifyCode() {
     const OTP_LENGTH = 4;
@@ -47,82 +48,83 @@ export default function VerifyCode() {
     };
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View className="flex-1 justify-between flex-col" style={{backgroundColor: theme.colors.background}}>
-                <View/>
+        <KeyboardDismissWrapper className="flex-1 justify-between flex-col"
+                                style={{backgroundColor: theme.colors.background}}>
+            <TouchableOpacity className="p-4" onPress={() => router.back()}>
+                <Ionicons name="chevron-back" size={24} color={theme.colors.text} />
+            </TouchableOpacity>
 
-                <View className="justify-center px-8">
-                    <Text className="text-3xl font-bold mb-2" style={{color: theme.colors.text}}>Verify Code</Text>
-                    <Text className="text-gray-500 mb-12">
-                        Kami telah mengirimkan kode verifikasi ke +628*******716{' '}
-                        {/*<Pressable style={{alignSelf: 'baseline'}}>*/}
+            <View className="justify-center px-8">
+                <Text className="text-3xl font-bold mb-2" style={{color: theme.colors.text}}>Verify Code</Text>
+                <Text className="text-gray-500 mb-12">
+                    Kami telah mengirimkan kode verifikasi ke +628*******716{' '}
+                    {/*<Pressable style={{alignSelf: 'baseline'}}>*/}
+                    <Text
+                        style={{color: theme.colors.primary}}
+                        onPress={() => {
+                            Alert.alert('Change Number Here.')
+                        }}>
+                        Wrong number?
+                    </Text>
+                    {/*</Pressable>*/}
+                </Text>
+
+                <View className="w-full mb-6 mt-8">
+                    <View className="flex-row justify-between">
+                        <Text className="mb-4" style={{color: theme.colors.text}}>Verification Code</Text>
                         <Text
+                            className="mb-4"
                             style={{color: theme.colors.primary}}
                             onPress={() => {
-                                Alert.alert('Change Number Here.')
+                                Alert.alert('Trigger Resend')
                             }}>
-                            Wrong number?
+                            Resend Code
                         </Text>
-                        {/*</Pressable>*/}
-                    </Text>
-
-                    <View className="w-full mb-6 mt-8">
-                        <View className="flex-row justify-between">
-                            <Text className="mb-4" style={{color: theme.colors.text}}>Verification Code</Text>
-                            <Text
-                                className="mb-4"
-                                style={{color: theme.colors.primary}}
-                                onPress={() => {
-                                    Alert.alert('Trigger Resend')
-                                }}>
-                                Resend Code
-                            </Text>
-                        </View>
-                        <Controller
-                            control={control}
-                            rules={{required: true, minLength: OTP_LENGTH, maxLength: OTP_LENGTH}}
-                            render={({field: {onChange, value}}) => (
-                                <OtpInput
-                                    numberOfDigits={OTP_LENGTH}
-                                    hideStick
-                                    onTextChange={onChange}
-                                    type={"numeric"}
-                                    theme={{
-                                        containerStyle: {display: "flex"},
-                                        pinCodeContainerStyle: {
-                                            backgroundColor: theme.colors.card,
-                                            borderColor: theme.colors.border,
-                                            width: "20%"
-                                        },
-                                        pinCodeTextStyle: {color: theme.colors.text},
-                                    }}
-                                />
-                            )}
-                            name="otp"
-                        />
-                        {errors.otp && <Text style={{color: 'red'}}>This is required.</Text>}
-                        {/*// TODO: Change colour to secondary (gray)*/}
-                        <View className="flex-row justify-between">
-                            <Text className="mt-4" style={{color: theme.colors.text}}>Kirim kode ulang dalam</Text>
-                            <Text className="mt-4" style={{color: theme.colors.text}}>{formatTime(countdown)}</Text>
-                        </View>
                     </View>
-
-                    <TouchableOpacity
-                        className={`w-full p-4 mt-8 rounded-lg`}
-                        style={{backgroundColor: (!disabled ? theme.colors.primary : theme.colors.card)}}
-                        disabled={disabled}
-                        onPress={handleContinuePress}
-                    >
-                        <Text className="text-center font-semibold"
-                              style={{color: theme.colors.background}}>Continue</Text>
-                    </TouchableOpacity>
-
+                    <Controller
+                        control={control}
+                        rules={{required: true, minLength: OTP_LENGTH, maxLength: OTP_LENGTH}}
+                        render={({field: {onChange, value}}) => (
+                            <OtpInput
+                                numberOfDigits={OTP_LENGTH}
+                                hideStick
+                                onTextChange={onChange}
+                                type={"numeric"}
+                                theme={{
+                                    containerStyle: {display: "flex"},
+                                    pinCodeContainerStyle: {
+                                        backgroundColor: theme.colors.card,
+                                        borderColor: theme.colors.border,
+                                        width: "20%"
+                                    },
+                                    pinCodeTextStyle: {color: theme.colors.text},
+                                }}
+                            />
+                        )}
+                        name="otp"
+                    />
+                    {errors.otp && <Text style={{color: 'red'}}>This is required.</Text>}
+                    {/*// TODO: Change colour to secondary (gray)*/}
+                    <View className="flex-row justify-between">
+                        <Text className="mt-4" style={{color: theme.colors.text}}>Kirim kode ulang dalam</Text>
+                        <Text className="mt-4" style={{color: theme.colors.text}}>{formatTime(countdown)}</Text>
+                    </View>
                 </View>
 
-                <View/>
+                <TouchableOpacity
+                    className={`w-full p-4 mt-8 rounded-lg`}
+                    style={{backgroundColor: (!disabled ? theme.colors.primary : theme.colors.card)}}
+                    disabled={disabled}
+                    onPress={handleContinuePress}
+                >
+                    <Text className="text-center font-semibold"
+                          style={{color: theme.colors.background}}>Continue</Text>
+                </TouchableOpacity>
 
             </View>
-        </TouchableWithoutFeedback>
+
+            <View/>
+
+        </KeyboardDismissWrapper>
     );
 }
