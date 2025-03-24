@@ -9,13 +9,13 @@ const login = async (req, res) => {
 
     const user = await db.User.findOne({ email });
     if (!user) {
-      return res.status(404).send({ message: "User not found" });
+      return res.status(400).send({ message: "Invalid Login" });
     }
 
     const isPasswordValid = await bcryptjs.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(401).send({ message: "Invalid password" });
+      return res.status(400).send({ message: "Invalid Login" });
     }
 
     const token = jwt.sign(

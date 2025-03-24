@@ -1,7 +1,7 @@
 import { Alert, Button, FlatList, StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
 import { useEffect, useState } from 'react';
 
-import CartItem from '@/components/CartItem';
+import CartItem from '@/components/ui/CartItem';
 import { CartItemType } from '@/types/CartItemType';
 
 export const cartSampleDate = [
