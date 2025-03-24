@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Getter
 @Setter
@@ -19,5 +21,6 @@ public class Brand {
     private String description;
 
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Product> products;
 }

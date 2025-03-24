@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,7 +32,7 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())  // Disable CSRF for APIs
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("login","register","/auth/login", "/auth/register", "/oauth2/**").permitAll() // Public endpoints
+                        .requestMatchers("login","register","/auth/login", "/auth/register", "/oauth2/**", "/catalogue/**").permitAll() // Public endpoints
                         .anyRequest().authenticated()
                 )
 //                .oauth2Login(oauth2 -> oauth2

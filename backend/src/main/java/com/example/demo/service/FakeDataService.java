@@ -8,6 +8,8 @@ import com.example.demo.repositories.CategoryRepo;
 import com.example.demo.repositories.ProductRepo;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,5 +72,25 @@ public class FakeDataService {
             products.add(productRepo.save(product));
         }
         return products;
+    }
+
+    public Page<Brand> getBrands(Pageable pageable) {
+        return brandRepo.findAll(pageable);
+    }
+
+    public Page<Category> getCategories(Pageable pageable) {
+        return categoryRepo.findAll(pageable);
+    }
+
+    public Page<Product> getProducts(Pageable pageable) {
+        return productRepo.findAll(pageable);
+    }
+
+    public Page<Product> getProductsByBrand(Long brandId, Pageable pageable) {
+        return productRepo.findAllByBrandId(brandId, pageable);
+    }
+
+    public Page<Product> getProductsByCategory(Long categoryId, Pageable pageable) {
+        return productRepo.findAllByCategoryId(categoryId, pageable);
     }
 }
