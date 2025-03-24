@@ -17,6 +17,6 @@ const HOST = process.env.HOSTNAME;
 const PORT = process.env.PORT;
 
 app.listen(PORT, HOST, () => {
-  console.log(`Server running at: http://${HOSTNAME}:${PORT}`);
+  console.log(`Server running at: http://${HOST}:${PORT}`);
   connectDb();
 });
