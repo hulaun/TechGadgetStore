@@ -1,0 +1,47 @@
+[
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da3f"
+        },
+        "product": {
+            "$oid": "67e0c588da90ebb86fe7da34"
+        },
+        "user": {
+            "$oid": "67e0c588da90ebb86fe7da3a"
+        },
+        "rating": 5,
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da40"
+        },
+        "product": {
+            "$oid": "67e0c588da90ebb86fe7da35"
+        },
+        "user": {
+            "$oid": "67e0c588da90ebb86fe7da3c"
+        },
+        "rating": 4,
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da41"
+        },
+        "product": {
+            "$oid": "67e0c588da90ebb86fe7da36"
+        },
+        "user": {
+            "$oid": "67e0c588da90ebb86fe7da3e"
+        },
+        "rating": 5,
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    }
+]

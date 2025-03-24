@@ -1,0 +1,14 @@
+[
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da2a"
+        },
+        "email": "admin",
+        "password": "$2b$10$Yi23fN8OzSEORH5MX/uXmOKqllhsq1YLakhWiUkKe3A82qjbJNXB6",
+        "role": "customer",
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        },
+        "__v": 0
+    }
+]

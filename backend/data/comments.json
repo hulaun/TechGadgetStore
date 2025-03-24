@@ -1,0 +1,47 @@
+[
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da39"
+        },
+        "product": {
+            "$oid": "67e0c588da90ebb86fe7da34"
+        },
+        "user": {
+            "$oid": "67e0c588da90ebb86fe7da3a"
+        },
+        "comment": "Great product, highly recommend!",
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da3b"
+        },
+        "product": {
+            "$oid": "67e0c588da90ebb86fe7da35"
+        },
+        "user": {
+            "$oid": "67e0c588da90ebb86fe7da3c"
+        },
+        "comment": "Good quality, but a bit expensive.",
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da3d"
+        },
+        "product": {
+            "$oid": "67e0c588da90ebb86fe7da36"
+        },
+        "user": {
+            "$oid": "67e0c588da90ebb86fe7da3e"
+        },
+        "comment": "Very comfortable and stylish.",
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    }
+]

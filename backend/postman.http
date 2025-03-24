@@ -1,0 +1,36 @@
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+    "email": "admin",
+    "password": "admin"
+}
+###
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin",
+    "password": "admin"
+}
+
+
+###
+GET http://localhost:3000/api/shop
+
+###
+GET http://localhost:3000/api/shop/67e0c588da90ebb86fe7da31
+
+
+###
+GET http://localhost:3000/api/product/
+
+###
+GET http://localhost:3000/api/product/67e0c588da90ebb86fe7da34
+
+###
+GET http://localhost:3000/api/product/category
+
+
+###
+GET http://localhost:3000/api/product/category/67e0c588da90ebb86fe7da2a

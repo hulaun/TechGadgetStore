@@ -1,0 +1,92 @@
+[
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da34"
+        },
+        "name": "Smartphone XYZ",
+        "price": 299.99,
+        "image": "https://example.com/images/smartphone_xyz.png",
+        "description": "Latest model with advanced features",
+        "category": {
+            "$oid": "67e0c588da90ebb86fe7da2a"
+        },
+        "shop": {
+            "$oid": "67e0c588da90ebb86fe7da2f"
+        },
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da35"
+        },
+        "name": "Wireless Headphones",
+        "price": 99.99,
+        "image": "https://example.com/images/wireless_headphones.png",
+        "description": "High-quality sound with noise cancellation",
+        "category": {
+            "$oid": "67e0c588da90ebb86fe7da2a"
+        },
+        "shop": {
+            "$oid": "67e0c588da90ebb86fe7da2f"
+        },
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da36"
+        },
+        "name": "Fashionable Jacket",
+        "price": 59.99,
+        "image": "https://example.com/images/fashionable_jacket.png",
+        "description": "Stylish and comfortable jacket",
+        "category": {
+            "$oid": "67e0c588da90ebb86fe7da2b"
+        },
+        "shop": {
+            "$oid": "67e0c588da90ebb86fe7da30"
+        },
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da37"
+        },
+        "name": "Kitchen Blender",
+        "price": 49.99,
+        "image": "https://example.com/images/kitchen_blender.png",
+        "description": "Powerful blender for smoothies and more",
+        "category": {
+            "$oid": "67e0c588da90ebb86fe7da2c"
+        },
+        "shop": {
+            "$oid": "67e0c588da90ebb86fe7da31"
+        },
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da38"
+        },
+        "name": "Bestselling Novel",
+        "price": 19.99,
+        "image": "https://example.com/images/bestselling_novel.png",
+        "description": "A gripping tale of adventure and mystery",
+        "category": {
+            "$oid": "67e0c588da90ebb86fe7da2d"
+        },
+        "shop": {
+            "$oid": "67e0c588da90ebb86fe7da32"
+        },
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    }
+]

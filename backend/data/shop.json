@@ -1,0 +1,62 @@
+[
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da2f"
+        },
+        "name": "Tech Store",
+        "isOfficial": true,
+        "profileImage": "https://example.com/images/tech_store.png",
+        "description": "Official store for tech gadgets",
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da30"
+        },
+        "name": "Fashion Hub",
+        "isOfficial": false,
+        "profileImage": "https://example.com/images/fashion_hub.png",
+        "description": "Trendy fashion and accessories",
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da31"
+        },
+        "name": "Home Essentials",
+        "isOfficial": true,
+        "profileImage": "https://example.com/images/home_essentials.png",
+        "description": "Quality home and kitchen appliances",
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da32"
+        },
+        "name": "Book World",
+        "isOfficial": false,
+        "profileImage": "https://example.com/images/book_world.png",
+        "description": "Wide range of books and literature",
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da33"
+        },
+        "name": "Sports Arena",
+        "isOfficial": true,
+        "profileImage": "https://example.com/images/sports_arena.png",
+        "description": "Sports equipment and apparel",
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        }
+    }
+]

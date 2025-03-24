@@ -1,0 +1,62 @@
+[
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da2a"
+        },
+        "name": "Electronics",
+        "image": "https://example.com/images/electronics.png",
+        "description": "Devices and gadgets",
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        },
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da2b"
+        },
+        "name": "Fashion",
+        "image": "https://example.com/images/fashion.png",
+        "description": "Clothing and accessories",
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        },
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da2c"
+        },
+        "name": "Home & Kitchen",
+        "image": "https://example.com/images/home_kitchen.png",
+        "description": "Home appliances and kitchenware",
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        },
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da2d"
+        },
+        "name": "Books",
+        "image": "https://example.com/images/books.png",
+        "description": "Books and literature",
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        },
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "67e0c588da90ebb86fe7da2e"
+        },
+        "name": "Sports",
+        "image": "https://example.com/images/sports.png",
+        "description": "Sports equipment and apparel",
+        "createdAt": {
+            "$date": "2025-03-24T02:38:00.081Z"
+        },
+        "__v": 0
+    }
+]
