@@ -13,7 +13,7 @@ app.use(morgan("dev"));
 
 route(app);
 
-const HOST = process.env.HOST;
+const HOST = process.env.HOSTNAME;
 const PORT = process.env.PORT;
 
 app.listen(PORT, HOST, () => {
