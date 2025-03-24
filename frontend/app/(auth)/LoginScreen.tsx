@@ -1,27 +1,21 @@
-import {useEffect, useState} from "react";
-import {
-    Keyboard,
-    KeyboardAvoidingView, Platform,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-    View
-} from "react-native";
+import {useEffect, useState} from 'react';
+import {Keyboard, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import Feather from '@expo/vector-icons/Feather';
-import {useTheme} from "@react-navigation/native";
-import {Link, router} from "expo-router";
-import {Controller, useForm} from "react-hook-form";
-import KeyboardDismissWrapper from "@/components/ui/KeyboardDismissWrapper";
-import {Ionicons} from "@expo/vector-icons";
+import {useTheme} from '@react-navigation/native';
+import {Link, router} from 'expo-router';
+import {Controller, useForm} from 'react-hook-form';
+import KeyboardDismissWrapper from '@/components/ui/KeyboardDismissWrapper';
+import {Ionicons} from '@expo/vector-icons';
+import useLogin, {LoginParams} from '@/hooks/useLogin';
 
-export default function LoginScreen() {
+const LoginScreen = () => {
     const theme = useTheme();
-    const {control, handleSubmit, formState: {errors}, watch} = useForm();
+    const {control, handleSubmit, formState: {errors}, watch} = useForm<LoginParams>();
     const email = watch("email");
     const password = watch("password");
     const [secureTextEntry, setSecureTextEntry] = useState(true);
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+    const loginMutation = useLogin();
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener(
@@ -43,21 +37,34 @@ export default function LoginScreen() {
         };
     }, []);
 
+    useEffect(() => {
+        if (loginMutation.isSuccess) {
+            console.log('Login successful:', loginMutation.data);
+            // Navigate to the desired screen or perform any other action on success
+            router.replace("/(tabs)");
+        }
+        if (loginMutation.isError) {
+            console.log('Login failed:', loginMutation.error);
+            // Show an error message or perform any other action on error
+        }
+    }, [loginMutation.isSuccess, loginMutation.isError]);
+
+    const onSubmit = (data: LoginParams) => {
+        loginMutation.mutate(data);
+    };
+
     return (
         <KeyboardDismissWrapper className="flex-1 justify-between flex-col"
                                 style={{backgroundColor: theme.colors.background}}>
-
             <TouchableOpacity className="p-4" onPress={() => router.push("/(tabs)")}>
                 <Ionicons name="chevron-back" size={24} color={theme.colors.text}/>
             </TouchableOpacity>
 
             <View className="mb-4 justify-center px-8">
-                <Text className="text-3xl font-bold mb-2" style={{color: theme.colors.text}}>Welcome back
-                    to</Text>
+                <Text className="text-3xl font-bold mb-2" style={{color: theme.colors.text}}>Welcome back to</Text>
                 <Text className="text-3xl font-bold mb-8" style={{color: theme.colors.text}}>Mega Mall</Text>
                 <Text className="text-gray-500 mb-12">Silahkan masukan data untuk login</Text>
 
-                {/* Text input for Email*/}
                 <View className="w-full mb-6 mt-8">
                     <Text className="mb-4" style={{color: theme.colors.text}}>Email or Phone</Text>
                     <Controller
@@ -79,7 +86,6 @@ export default function LoginScreen() {
                     {errors.email && <Text style={{color: 'red'}}>This is required.</Text>}
                 </View>
 
-                {/* Text input for Password*/}
                 <View className="w-full mb-6">
                     <Text className=" mb-4" style={{color: theme.colors.text}}>Password</Text>
                     <View className="w-full flex-row items-center rounded-lg p-4"
@@ -111,17 +117,14 @@ export default function LoginScreen() {
                     {errors.password && <Text style={{color: 'red'}}>This is required.</Text>}
                 </View>
 
-
                 <TouchableOpacity
                     className={`w-full p-4 mt-8 rounded-lg`}
                     style={{backgroundColor: (!errors.email && !errors.password && email && password ? theme.colors.primary : theme.colors.card)}}
-                    // onPress={handleSubmit(onSubmit)}
+                    onPress={handleSubmit(onSubmit)}
                     disabled={!!errors.email || !!errors.password || !email || !password}
                 >
-                    <Text className="text-center font-semibold" style={{color: theme.colors.background}}>Sign
-                        In</Text>
+                    <Text className="text-center font-semibold" style={{color: theme.colors.background}}>Sign In</Text>
                 </TouchableOpacity>
-
             </View>
 
             {!isKeyboardVisible ? (
@@ -135,8 +138,8 @@ export default function LoginScreen() {
                     </TouchableOpacity>
                 </View>
             ) : <View/>}
-
-
         </KeyboardDismissWrapper>
     );
 }
+
+export default LoginScreen;
