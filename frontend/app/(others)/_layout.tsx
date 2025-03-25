@@ -27,6 +27,20 @@ export default function TabLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="user_profile"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="update_profile"  // 👈 Added Update Profile Screen
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen name="order_list_screen" options={{ headerShown: false }} />
+      <Stack.Screen name="order_detail" options={{ headerShown: false }} />
     </Stack>
     <StatusBar backgroundColor="#161622" style="light" />
   </>
