@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, TextInput, FlatList, Image, TouchableOpacity, Dimensions, ImageSourcePropType } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { CartIcon, ChevronLeftIcon } from "@/constants/Icons";
@@ -6,30 +6,31 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ProductCard from "@/components/ui/ProductCard";
 import { StatusBar } from "expo-status-bar";
 import { useTheme } from "@react-navigation/native";
+import { Product } from "@/types/ProductType";
+import { useAuth } from "@/context/AuthProvider";
 
-
-type Product = {
-    id: string;
-    name: string;
-    price: string;
-    image: ImageSourcePropType;
-    rating: number;
-    sold: number;
-  };
-
-const products: Array<Product> = [
-    { id: "1", name: "TMA-2 HD Wireless", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png") , rating: 4.5, sold: 100 },
-    { id: "2", name: "TMA-2 HD Wireless", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png"), rating: 4.5, sold: 100 },
-    { id: "3", name: "Oppo A15", price: "Rp. 500,000", image: require("../../assets/images/headphones.png"), rating: 4.2, sold: 200 },
-// { id: "4", name: "Oppo A15", price: "Rp. 500,000", image: "https://picsum.photos/20", rating: 4.2, sold: 200 },
-];
 const CategoryScreen = () => {
   const [search, setSearch] = useState("");
-  const { name } = useLocalSearchParams();
+  const { id, name } = useLocalSearchParams();
   const router = useRouter();
   const screenWidth = useRef(Dimensions.get("window").width);
   const theme = useTheme();
+  const { api } = useAuth();
+
+  const [products, setProducts] = useState<Product[]>([]);
   
+  useEffect(() => {
+    const fetchProductsByCategory = async () => {
+      try {
+        const response = await api.get(`/product/category/${id}`);
+        setProducts(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchProductsByCategory();
+  },[]);
+
   return (
     <SafeAreaView className="flex-1 bg-white h-full">
       <StatusBar backgroundColor={theme.colors.background}/>
@@ -59,7 +60,7 @@ const CategoryScreen = () => {
         <FlatList
             showsVerticalScrollIndicator={false}
             data={products}
-            keyExtractor={(product) => product.id.toString()}
+            keyExtractor={(product) => product._id.toString()}
             numColumns={2}
             columnWrapperStyle={{ justifyContent: "space-between", gap: 16 , marginBottom: 16}}
             renderItem={({ item }) => (
@@ -67,9 +68,9 @@ const CategoryScreen = () => {
                 )}
                 contentContainerStyle={{ gap: 16}}
         />
-        <TouchableOpacity className="border border-black rounded-xl py-3 items-center my-2 mx-4">
+        {/* <TouchableOpacity className="border border-black rounded-xl py-3 items-center my-2 mx-4">
             <Text className="text-base font-semibold">Filter & Sorting</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
     </View>
       {/* Filter & Sorting Button */}
     </SafeAreaView>

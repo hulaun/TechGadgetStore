@@ -1,8 +1,12 @@
-import { Alert, Button, FlatList, StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
+import { Alert, Button, FlatList, StyleSheet, Text, View, ScrollView, Pressable, TouchableOpacity } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import CartItem from '@/components/ui/CartItem';
 import { CartItemType } from '@/types/CartItemType';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '@react-navigation/native';
 
 export const cartSampleDate = [
   {
@@ -47,11 +51,13 @@ export const cartSampleDate = [
 ];
 
 const CartList = () => {
+  
   const [cartItems, setCartItems] = useState<CartItemType[]>(cartSampleDate);
-
   const [selectedItemIds, setSelectedItemIds] = useState<number[]>([]);
-
   const [totalPrice, setTotalPrice] = useState<number>(0);
+
+  const router = useRouter();
+  const theme = useTheme();
 
   const handleDeleteItems = (id: number[]): void => {
     const newCartItems = cartItems.filter((item) => !id.includes(item.id));
@@ -105,50 +111,55 @@ const CartList = () => {
   }, [cartItems]);
 
   return (
-    <View className="flex-1">
-      <View className="flex-row justify-between p-4 mt-[20px]">
-        <Text className="text-xl font-bold">Shopping Cart</Text>
-        <Pressable
-          onPress={() => handleDeleteItems(selectedItemIds)}
-          className="bg-blue-700 py-2 px-6 rounded-lg shadow-lg">
-          <Text className="text-white text-center">Delete</Text>
-        </Pressable>
-      </View>
-      <View className='flex-1'>
-        <FlatList
-          data={cartItems}
-          renderItem={({ item }) => (
-            <CartItem
-              name={item.name}
-              description={item.description}
-              imageUrl={item.imageUrl}
-              price={item.price}
-              amount={item.amount}
-              selectItem={() => handleSelectItem(item.id)}
-              checked={selectedItemIds.includes(item.id)}
-              increaseAmount={() => handleIncreaseAmount(item.id)}
-              decreaseAmount={() => handleDecreaseAmount(item.id)}
-            />
-          )}
-          keyExtractor={(item) => item.id.toString()}
-        />
-      </View>
-      <View>
-        <View className='flex-row justify-between text-center p-2 mx-3 rounded-lg bg-slate-200'>
-          <View>
-            <Text >Total:</Text>
-          </View>
-          <View>
-            <Text className='text-red-600'>{totalPrice + " "}$</Text>
-          </View>
+    <SafeAreaView className="flex-1">
+      <View className="flex-1">
+        <View className="flex-row justify-between p-4 mt-[20px]">
+          <TouchableOpacity onPress={() => router.back()}>
+            <Ionicons name="chevron-back" size={24} color={theme.colors.text} />
+          </TouchableOpacity>
+          <Text className="text-xl font-bold">Shopping Cart</Text>
+          <Pressable
+            onPress={() => handleDeleteItems(selectedItemIds)}
+            className="bg-blue-700 py-2 px-6 rounded-lg shadow-lg">
+            <Text className="text-white text-center">Delete</Text>
+          </Pressable>
         </View>
-        <Pressable
-          onPress={handleCheckout}
-          className="bg-blue-700 text-center p-2 mx-3 rounded-lg m-3">
-          <Text className="text-white text-center">Checkout</Text>
-        </Pressable>
+        <View className='flex-1'>
+          <FlatList
+            data={cartItems}
+            renderItem={({ item }) => (
+              <CartItem
+                name={item.name}
+                description={item.description}
+                imageUrl={item.imageUrl}
+                price={item.price}
+                amount={item.amount}
+                selectItem={() => handleSelectItem(item.id)}
+                checked={selectedItemIds.includes(item.id)}
+                increaseAmount={() => handleIncreaseAmount(item.id)}
+                decreaseAmount={() => handleDecreaseAmount(item.id)}
+              />
+            )}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        </View>
+        <View>
+          <View className='flex-row justify-between text-center p-2 mx-3 rounded-lg bg-slate-200'>
+            <View>
+              <Text >Total:</Text>
+            </View>
+            <View>
+              <Text className='text-red-600'>{totalPrice + " "}$</Text>
+            </View>
+          </View>
+          <Pressable
+            onPress={handleCheckout}
+            className="bg-blue-700 text-center p-2 mx-3 rounded-lg m-3">
+            <Text className="text-white text-center">Checkout</Text>
+          </Pressable>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

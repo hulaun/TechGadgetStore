@@ -10,6 +10,12 @@ export default function TabLayout() {
     <>
     <Stack>
       <Stack.Screen
+        name="cart_list"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="category"
         options={{
           headerShown: false,

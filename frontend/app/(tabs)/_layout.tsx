@@ -1,6 +1,6 @@
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import React from 'react';
-import { Platform, View, Text } from 'react-native';
+import { Platform, View, Text, TouchableOpacity } from 'react-native';
 
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
@@ -9,10 +9,13 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BellIcon, CartIcon, HomeIcon, LoginIcon, OrderIcon, WishlistIcon } from '@/constants/Icons';
 import { useTheme } from '@react-navigation/native';
+import { useAuth } from '@/context/AuthProvider';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const theme = useTheme();
+  const router = useRouter();
+  const {isLogged} = useAuth()
 
   return (
     <Tabs
@@ -41,7 +44,9 @@ export default function TabLayout() {
                 <Text className="text-xl font-bold text-blue-600">Mega Mall</Text>
                 <View className="flex-row gap-4">
                   <BellIcon/>
-                  <CartIcon/>
+                  <TouchableOpacity onPress={() => router.push('/(others)/cart_list')}>
+                    <CartIcon/>
+                  </TouchableOpacity>
                 </View>
               </View>
             </SafeAreaView>
@@ -65,22 +70,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="login"
         options={{
-          title: 'login',
-          tabBarIcon: ({ color }) => <LoginIcon color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="cart_list"
-        options={{
-          title: 'Cart List',
-          tabBarIcon: ({ color }) => <WishlistIcon color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="account"
-        options={{
-          title: 'account',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: isLogged?"Account":'Login',
+          tabBarIcon: ({ color }) => isLogged? <IconSymbol size={28} name="paperplane.fill" color={color} />:<LoginIcon color={color} />,
         }}
       />
     </Tabs>

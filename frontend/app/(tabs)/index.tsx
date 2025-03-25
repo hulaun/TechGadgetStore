@@ -1,31 +1,18 @@
 import { View, Text, TextInput, TouchableOpacity, Dimensions, ImageSourcePropType } from 'react-native'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { FlatList, Image, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useTheme } from '@react-navigation/native';
 import { ComputerIcon, FashionIcon, FoodsIcon, GadgetIcon, GiftIcon, SearchIcon, StarIcon } from '@/constants/Icons';
 import { Colors } from '@/constants/Colors';
-import Svg, { Path } from 'react-native-svg';
 import ProductCard from '@/components/ui/ProductCard';
 import { useRouter } from 'expo-router';
-type Product = {
-  id: string;
-  name: string;
-  price: string;
-  image: ImageSourcePropType;
-  rating: number;
-  sold: number;
-};
+import { useAuth } from '@/context/AuthProvider';
+import { Product } from '@/types/ProductType';
+import { Category } from '@/types/CategoryType';
 
-type Category = {
-  id: number;
-  name: string;
-  Icon: React.ComponentType<{ color?: string }>;
-  color: string;
-  iconColor: string;
-};
-const categories:Array<Category> = [
+const initialCategories:Array<Category> = [
   {
     id: 1,
     name: "Foods",
@@ -64,7 +51,7 @@ const categories:Array<Category> = [
 ]
 
 const Home = () => {
-
+  const { api } = useAuth();
   const screenWidth = useRef<number>(Dimensions.get('screen').width);
   const router = useRouter();
   const theme = useTheme();
@@ -73,27 +60,42 @@ const Home = () => {
   }, [theme])
 
 
-  const products: Array<Product> = [
-    { id: "1", name: "TMA-2 HD Wireless", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png") , rating: 4.5, sold: 100 },
-    { id: "2", name: "TMA-2 HD Wireless", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png"), rating: 4.5, sold: 100 },
-    { id: "3", name: "Oppo A15", price: "Rp. 500,000", image: require("../../assets/images/headphones.png"), rating: 4.2, sold: 200 },
-    // { id: "4", name: "Oppo A15", price: "Rp. 500,000", image: require("../../assets/images/headphones.png"), rating: 4.2, sold: 200 },
-  ];
+  const [products, setProducts] = useState<Product[]>([]);
+  const [productsForYou, setProductsForYou] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>();
 
-  const productsForYou: Array<Product> = [
-    { id: "1", name: "TMA-2 HD Wireless", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png") , rating: 4.5, sold: 100 },
-    { id: "2", name: "Iphone XS Max", price: "Rp. 2,500,000", image: require("../../assets/images/headphones.png"), rating: 4.6, sold: 130 },
-    { id: "3", name: "Oppo A15", price: "Rp. 500,000", image: require("../../assets/images/headphones.png"), rating: 4.2, sold: 200 },
-    { id: "4", name: "Samsung Galaxy S21", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png"), rating: 4.7, sold: 150 },
-    { id: "5", name: "Samsung Galaxy S21", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png"), rating: 4.7, sold: 150 },
-    { id: "6", name: "Samsung Galaxy S21", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png"), rating: 4.7, sold: 150 },
-    { id: "7", name: "Samsung Galaxy S21", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png"), rating: 4.7, sold: 150 },
-    { id: "8", name: "Samsung Galaxy S21", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png"), rating: 4.7, sold: 150 },
-    { id: "9", name: "Samsung Galaxy S21", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png"), rating: 4.7, sold: 150 },
-    { id: "10", name: "Samsung Galaxy S21", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png"), rating: 4.7, sold: 150 },
-    { id: "11", name: "Samsung Galaxy S21", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png"), rating: 4.7, sold: 150 },
-    { id: "12", name: "Samsung Galaxy S21", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png"), rating: 4.7, sold: 150 },
-  ];
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await api.get('product/category');
+      const fetchedCategories = response.data.data;
+      const len = initialCategories.length;
+
+      const updatedCategories = fetchedCategories.map((category: any, index: number) => {
+          return {
+            id: index + 1,
+            _id: category._id,
+            name: category.name,
+            Icon: initialCategories[index%len].Icon,
+            color: initialCategories[index%len].color,
+            iconColor: initialCategories[index%len].iconColor,
+          };
+      });
+
+      setCategories(updatedCategories);
+    };
+    const fetchProducts = async () => {
+      const data = await api.get('/product/top');
+      setProducts(data.data.data);
+    }
+    const fetchProductsForYou = async () => {
+      const data = await api.get('/product');
+      setProductsForYou(data.data.data);
+    }
+
+    fetchCategories();
+    fetchProducts();
+    fetchProductsForYou();
+  },[])
 
 
   return (
@@ -146,7 +148,7 @@ const Home = () => {
                     data={theCategories}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => (
-                      <TouchableOpacity className="flex items-center mr-6" onPress={()=>router.push(`/(others)/category?name=${item.name}`)}>
+                      <TouchableOpacity className="flex items-center mr-6" onPress={()=>router.push(`/(others)/category?id=${item._id}&name=${item.name}`)}>
                         <View style={{ backgroundColor: (theme.dark)?"":item.color, borderColor: theme.dark?item.iconColor:"", borderWidth:theme.dark?1:0 }} className={`p-4 rounded-xl w-14 h-14 flex items-center justify-center mb-2`}>
                           <item.Icon color={(theme.dark)?item.color:item.iconColor} />
                         </View>
@@ -167,7 +169,7 @@ const Home = () => {
                   <FlatList
                     showsVerticalScrollIndicator={false}
                     data={theProducts}
-                    keyExtractor={(product) => product.id.toString()}
+                    keyExtractor={(product) => product._id.toString()}
                     numColumns={2}
                     columnWrapperStyle={{ justifyContent: "space-between", gap: 16 , marginBottom: 16}}
                     renderItem={({ item }) => (

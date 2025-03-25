@@ -1,111 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image, FlatList, ImageSourcePropType, Dimensions } from "react-native";
 import { Avatar, Button, Divider } from "react-native-paper";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import ProductCard from "@/components/ui/ProductCard";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-interface Review {
-  id: number;
-  name: string;
-  rating: number;
-  time: string;
-  review: string;
-  avatar: any;
-}
+import { useAuth } from "@/context/AuthProvider";
+import { Product } from "@/types/ProductType";
+import { Review } from "@/types/ReviewType";
 
-interface FeaturedProduct {
-  id: number;
-  name: string;
-  price: string;
-  image: any;
-  rating: number;
-  reviewCount: number;
-  tersedia: number;
-  description: string;
-}
-
-// Mock data
-const reviews: Review[] = [
-  {
-    id: 1,
-    name: "Yelena Belova",
-    rating: 4,
-    time: "2 Minggu yang lalu",
-    review: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    avatar: require("../../assets/images/reviewers.jpeg"),
-  },
-  {
-    id: 2,
-    name: "Stephen Strange",
-    rating: 3,
-    time: "1 Bulan yang lalu",
-    review: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    avatar: require("../../assets/images/reviewers.jpeg"),
-  },
-  {
-    id: 3,
-    name: "Peter Parker",
-    rating: 5,
-    time: "2 Bulan yang lalu",
-    review: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    avatar: require("../../assets/images/reviewers.jpeg"),
-  },
-];
-
-
-type Product = {
-    id: string;
-    name: string;
-    price: string;
-    image: ImageSourcePropType;
-    rating: number;
-    sold: number;
-  };
-
-const products: Array<Product> = [
-    { id: "1", name: "TMA-2 HD Wireless", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png") , rating: 4.5, sold: 100 },
-    { id: "2", name: "TMA-2 HD Wireless", price: "Rp. 1,500,000", image: require("../../assets/images/headphones.png"), rating: 4.5, sold: 100 },
-    { id: "3", name: "Oppo A15", price: "Rp. 500,000", image: require("../../assets/images/headphones.png"), rating: 4.2, sold: 200 },
-// { id: "4", name: "Oppo A15", price: "Rp. 500,000", image: "https://picsum.photos/20", rating: 4.2, sold: 200 },
-];
-
-const featuredProducts: FeaturedProduct[] = [
-  {
-    id: 1,
-    name: "TMA-2HD Wireless",
-    price: "Rp 1.500.000",
-    image: require("../../assets/images/headset.png"),
-    description: "",
-    rating: 4.6,
-    reviewCount: 86,
-    tersedia: 250,
-  },
-  {
-    id: 2,
-    name: "Power Drill",
-    price: "Rp 1.500.000",
-    description: "",
-    image: require("../../assets/images/drill.png"),
-    rating: 4.6,
-    reviewCount: 86,
-    tersedia: 250,
-  },
-];
-
-const currentProduct: FeaturedProduct = {
-  id: 1,
-  name: "TMA-2HD Wireless",
-  price: "Rp 1.500.000",
-  description:
-    "The speaker unit contains a diaphragm that is precision-grown from NAC Audio bio-cellulose, making it stiffer, lighter and stronger than regular PET speaker units, and allowing the sound-producing diaphragm to vibrate without the levels of distortion found in other speakers. ",
-  image: require("../../assets/images/headset.png"),
-  rating: 4.6,
-  reviewCount: 86,
-  tersedia: 250,
-};
-
-const ProductDetailScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
+const ProductDetailScreen: React.FC<{ navigation: any }> = () => {
   const sections = [
     { id: "header" },
     { id: "image" },
@@ -118,6 +22,50 @@ const ProductDetailScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   ];
   const router = useRouter();
   const screenWidth = Dimensions.get("screen").width;
+  
+  const { id } = useLocalSearchParams();
+  const { api } = useAuth();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [currentProduct, setCurrentProduct] = useState<Product>({} as Product);
+  const [shop, setShop] = useState<any>({});
+  const [reviews, setReviews] = useState<Review[]>([])
+  
+  
+  useEffect(()=>{
+    const fetchCurrentProduct = async () => {
+      try {
+        const response = await api.get(`/product/${id}`);
+        setCurrentProduct(response.data.data.product);
+        setShop(response.data.data.product.shop);
+        setReviews(response.data.data.comments);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    const fetchProducts = async () => {
+      try {
+        const response = await api.get("/product");
+        setProducts(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchCurrentProduct();
+    fetchProducts();
+  },[])
+
+  const formatDate = (isoDate: string) => {
+    const date = new Date(isoDate);
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const year = date.getFullYear();
+
+    const formatted = `${day}/${month}/${year}`;
+    return formatted;
+}
+
 
 const renderItem = ({ item }: {item: any}) => {
   switch (item.id) {
@@ -150,15 +98,9 @@ const renderItem = ({ item }: {item: any}) => {
         <View className="mt-4">
           <Text className="text-xl font-bold">{currentProduct.name}</Text>
           <Text className="text-lg text-red-500 font-bold">{currentProduct.price}</Text>
-          <View className="flex-row justify-between items-center">
-            <View className="flex-row items-center mt-1">
-              <MaterialIcons name="star" size={18} color="gold" />
-              <Text className="text-base font-semibold ml-1">{currentProduct.rating}</Text>
-              <Text className="text-base text-gray-500 ml-2">{currentProduct.reviewCount} Reviews</Text>
-            </View>
-            <View className="bg-green-100 px-3 py-1 rounded-full">
-              <Text className="text-green-600 font-semibold">Tersedia : {currentProduct.tersedia}</Text>
-            </View>
+          <View className="flex-row items-center mt-1">
+            <MaterialIcons name="star" size={18} color="gold" />
+            <Text className="text-base font-semibold ml-1">{currentProduct.averageRating}</Text>
           </View>
         </View>
       );
@@ -167,8 +109,8 @@ const renderItem = ({ item }: {item: any}) => {
         <TouchableOpacity className="flex-row items-center my-4" onPress={() => router.push("/(others)/seller_details_screen")}> 
           <Avatar.Image size={40} source={require("../../assets/images/shop.png")} />
           <View className="ml-3">
-            <Text className="text-base font-bold">Shop Larson Electronic</Text>
-            <Text className="text-sm text-gray-500">Official Store ✅</Text>
+            <Text className="text-base font-bold">{shop.name}</Text>
+            <Text className="text-sm text-gray-500">{shop.isOfficial?"Official Store ✅":""}</Text>
           </View>
         </TouchableOpacity>
       );
@@ -182,19 +124,14 @@ const renderItem = ({ item }: {item: any}) => {
     case "reviews":
       return (
         <View className="my-4">
-          <Text className="text-lg font-bold">Review ({currentProduct.reviewCount})</Text>
+          <Text className="text-lg font-bold">Review 20</Text>
           {reviews.map((item) => (
-            <View key={item.id} className="flex-row mt-4">
-              <Avatar.Image size={40} source={item.avatar} />
+            <View key={item._id} className="flex-row mt-4">
+              <Avatar.Image size={40} source={require("../../assets/images/reviewers.jpeg")} />
               <View className="ml-3 flex-1">
-                <Text className="text-sm font-bold">{item.name}</Text>
-                <Text className="text-xs text-gray-500">{item.time}</Text>
-                <View className="flex-row mt-1">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <MaterialIcons key={i} name="star" size={16} color={i < item.rating ? "gold" : "lightgray"} />
-                  ))}
-                </View>
-                <Text className="text-gray-500 mt-1">{item.review}</Text>
+                <Text className="text-sm font-bold">Peter Parker</Text>
+                <Text className="text-xs text-gray-500">{formatDate(item.createdAt)}</Text>
+                <Text className="text-gray-500 mt-1">{item.comment}</Text>
               </View>
             </View>
           ))}
@@ -206,7 +143,7 @@ const renderItem = ({ item }: {item: any}) => {
         <FlatList
           showsVerticalScrollIndicator={false}
           data={products}
-          keyExtractor={(product) => product.id.toString()}
+          keyExtractor={(product) => product._id.toString()}
           numColumns={2}
           columnWrapperStyle={{ justifyContent: "space-between", gap: 16, marginBottom: 16 }}
           renderItem={({ item }) => <ProductCard item={item} width={(screenWidth - 56) / 2} />}

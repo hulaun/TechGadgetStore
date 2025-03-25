@@ -17,7 +17,9 @@ interface LoginResponse {
 }
 
 const loginMutationFn = async ({ email, password }: LoginParams): Promise<LoginResponse> => {
+    console.log('Logging in with:', email)
     const response = await axios.post<LoginResponse>(`${apiUrl}/auth/login`, { email, password });
+    console.log('Login response:', response.data)
     return response.data;
 };
 
