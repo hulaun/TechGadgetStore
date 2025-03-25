@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
@@ -13,16 +15,59 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { ArrowLeft, Calendar } from "lucide-react-native";
 
 
+const API_URL = 'http://192.168.1.147:3000/api/user'; // Change to your actual API URL
 
 export default function BioDataScreen() {
   const navigation = useNavigation();
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [gender, setGender] = useState("");
-  const [dob, setDob] = useState(new Date());
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  // User info states
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
+  const [dob, setDob] = useState<Date>(new Date());
+  const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const userId = "customer"; // Replace with actual user ID from authentication
+
+  // Function to handle API call
+  const updateProfile = async () => {
+    if (!firstName || !lastName || !phoneNumber || !gender) {
+      Alert.alert("Error", "Please fill in all fields.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_URL}/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstname: firstName,
+          lastname: lastName,
+          phoneNumber,
+          gender,
+          dob: dob.toISOString().split("T")[0], // Format date to YYYY-MM-DD
+        }),
+      });
+
+      const data = await response.json();
+      setLoading(false);
+
+      if (response.ok) {
+        Alert.alert("Success", "Profile updated successfully!");
+      } else {
+        Alert.alert("Error", data.message || "Failed to update profile");
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error("Update profile error:", error);
+      Alert.alert("Error", "Something went wrong!");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -89,8 +134,8 @@ export default function BioDataScreen() {
       )}
 
       {/* Update Profile Button */}
-      <TouchableOpacity style={styles.updateButton}>
-        <Text style={styles.updateText}>Update Profile</Text>
+      <TouchableOpacity style={styles.updateButton} onPress={updateProfile} disabled={loading}>
+        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.updateText}>Update Profile</Text>}
       </TouchableOpacity>
     </View>
   );
@@ -139,3 +184,4 @@ const styles = StyleSheet.create({
   },
   updateText: { color: "white", fontSize: 16, fontWeight: "600" },
 });
+

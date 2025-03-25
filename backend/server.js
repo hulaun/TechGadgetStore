@@ -13,10 +13,10 @@ app.use(morgan("dev"));
 
 route(app);
 
-const HOSTNAME = process.env.HOSTNAME;
+const HOST = process.env.HOSTNAME;
 const PORT = process.env.PORT;
 
-app.listen(PORT, HOSTNAME, () => {
-  console.log(`Server running at: http://${HOSTNAME}:${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Server running at: http://${HOST}:${PORT}`);
   connectDb();
 });
