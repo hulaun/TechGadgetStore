@@ -26,7 +26,7 @@ const loginMutationFn = async ({ email, password }: LoginParams): Promise<LoginR
 const useLogin = () => {
     const queryClient = useQueryClient();
     const { setIsLogged, setUser, setLoading } = useAuth();
-
+    
     const mutationOptions: UseMutationOptions<LoginResponse, Error, LoginParams> = {
         mutationFn: loginMutationFn,
         onSuccess: async (data: LoginResponse) => {
