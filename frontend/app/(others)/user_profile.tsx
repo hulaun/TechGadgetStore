@@ -38,11 +38,10 @@ export default function ProfileScreen() {
                                 <Text style={styles.cardSubtitle}>Make changes to your account</Text>
                             </View>
                         </View>
-                        <Text style={styles.warningIcon}>⚠️</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.card} onPress={() => router.push("/(others)/order_list_screen")} // Navigate to Order List screen
-                    >            <View style={styles.cardContent}>
+                    <TouchableOpacity style={styles.card} onPress={() => router.push("/(others)/order_list_screen")} >           
+                         <View style={styles.cardContent}>
                             <Users size={20} color="#000" />
                             <View>
                                 <Text style={styles.cardTitle}>Order list</Text>
@@ -102,14 +101,6 @@ export default function ProfileScreen() {
                 </View>
             </ScrollView>
 
-            {/* Bottom Navigation */}
-            <View style={styles.bottomNav}>
-                <Text style={styles.navItem}>Home</Text>
-                <Text style={styles.navItem}>Card</Text>
-                <Text style={styles.navItem}>Transactions</Text>
-                <Text style={styles.navItem}>Requests</Text>
-                <Text style={styles.navActive}>Profile</Text>
-            </View>
         </SafeAreaView>
     );
 }

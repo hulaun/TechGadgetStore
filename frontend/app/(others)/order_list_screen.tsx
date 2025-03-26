@@ -32,7 +32,7 @@ export default function OrderListScreen() {
   return (
     <SafeAreaView style={styles.container}>
       {/* Back Button chỉ có Icon */}
-      <TouchableOpacity style={styles.backButton} onPress={() => router.push("/(others)/user_profile")}>
+      <TouchableOpacity style={styles.backButton} onPress={() => router.push("/(tabs)/login")}>
         <ArrowLeft size={28} color="#1E40AF" />
       </TouchableOpacity>
 

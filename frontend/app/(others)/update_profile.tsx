@@ -15,7 +15,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { ArrowLeft, Calendar } from "lucide-react-native";
 
 
-const API_URL = 'http://192.168.1.147:3000/api/user'; // Change to your actual API URL
+const API_URL = 'http://192.168.1.189:3000/api/user'; // Change to your actual API URL
 
 export default function BioDataScreen() {
   const navigation = useNavigation();
