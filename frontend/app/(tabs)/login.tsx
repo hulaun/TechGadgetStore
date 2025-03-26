@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import { Text, TouchableOpacity } from 'react-native';
 import { useAuth } from '@/context/AuthProvider';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ProfileScreen from '../(others)/user_profile';
 
 const Login = () => {
   const router = useRouter();
@@ -23,12 +24,7 @@ const Login = () => {
   }
 
   return (
-    <SafeAreaView className="flex-1 justify-center items-center">
-      <Text>Account</Text>
-      <TouchableOpacity onPress={handleLogout} className="mt-4 p-2 bg-red-500 rounded">
-        <Text className="text-white">Logout</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+    <ProfileScreen />
   );
 };
 

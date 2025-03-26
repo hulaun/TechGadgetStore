@@ -54,24 +54,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="wishlist"
-        options={{
-          title: 'Wishlist',
-          tabBarIcon: ({ color }) => <WishlistIcon color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="order"
-        options={{
-          title: 'order',
-          tabBarIcon: ({ color }) => <OrderIcon color={color} />,
-        }}
-      />
-      <Tabs.Screen
         name="login"
         options={{
           title: isLogged?"Account":'Login',
-          tabBarIcon: ({ color }) => isLogged? <IconSymbol size={28} name="paperplane.fill" color={color} />:<LoginIcon color={color} />,
+          tabBarIcon: ({ color }) => <LoginIcon color={color} />,
         }}
       />
     </Tabs>

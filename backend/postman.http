@@ -37,3 +37,15 @@ GET http://localhost:3000/api/product/category
 
 ###
 GET http://localhost:3000/api/product/category/67e0c588da90ebb86fe7da2a
+
+###
+PUT http://localhost:3000/api/user/customer
+Content-Type: application/json
+
+{
+    "firstname": "John",
+    "lastname": "Doe",
+    "phoneNumber": "123456789",
+    "gender": "other",
+    "dob": "2021-09-01"
+}
