@@ -20,7 +20,7 @@ export default function VerifyCode() {
     function handleContinuePress() {
         // Business Logic
 
-        router.replace("/(auth)/reset-password/UpdatePassword");
+        router.replace("/(auth)/sign-up/CreatePassword");
     }
 
     useEffect(() => {
@@ -113,12 +113,11 @@ export default function VerifyCode() {
 
                 <TouchableOpacity
                     className={`w-full p-4 mt-8 rounded-lg ${!disabled ? 'bg-blue-500' : 'bg-gray-500'}`}
-                    style={{backgroundColor: (!disabled ? theme.colors.primary : theme.colors.card)}}
                     disabled={disabled}
                     onPress={handleContinuePress}
                 >
                     <Text className="text-center font-semibold"
-                          style={{color: theme.colors.background}}>Continue</Text>
+                          style={{color: theme.colors.background}}>Continue to Sign Up</Text>
                 </TouchableOpacity>
 
             </View>

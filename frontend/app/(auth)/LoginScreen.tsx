@@ -140,7 +140,7 @@ const LoginScreen = () => {
                             Password</Link>
                     </TouchableOpacity>
                     <TouchableOpacity>
-                        <Text style={{ color: theme.colors.primary }}>Sign Up</Text>
+                        <Link href={'/sign-up/CreateAccount'} style={{ color: theme.colors.text }}>Sign Up</Link>
                     </TouchableOpacity>
                 </View>
             ) : <View />}

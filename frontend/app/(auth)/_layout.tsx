@@ -26,7 +26,7 @@ export default function TabLayout() {
                 <Stack.Screen
                     name="reset-password/VerifyCode"
                     options={{
-                        title: "Verity Code",
+                        title: "Verify Code",
                         headerShown: false,
                     }}
                 />
@@ -34,6 +34,27 @@ export default function TabLayout() {
                     name="reset-password/UpdatePassword"
                     options={{
                         title: "Update Password",
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="sign-up/CreateAccount"
+                    options={{
+                        title: "Create Account",
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="sign-up/VerifyCode"
+                    options={{
+                        title: "Verify Code",
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="sign-up/CreatePassword"
+                    options={{
+                        title: "Create Password",
                         headerShown: false,
                     }}
                 />
