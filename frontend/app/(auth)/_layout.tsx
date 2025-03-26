@@ -44,20 +44,6 @@ export default function TabLayout() {
                         headerShown: false,
                     }}
                 />
-                <Stack.Screen
-                    name="sign-up/VerifyCode"
-                    options={{
-                        title: "Verify Code",
-                        headerShown: false,
-                    }}
-                />
-                <Stack.Screen
-                    name="sign-up/CreatePassword"
-                    options={{
-                        title: "Create Password",
-                        headerShown: false,
-                    }}
-                />
             </Stack>
             <StatusBar backgroundColor="#161622" style="light"/>
         </>
